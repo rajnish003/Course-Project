@@ -2,19 +2,28 @@ import React from 'react';
 import { useState } from "react";
 import Card from './Card';
 
-const Cards = ({ courses }) => {
+const Cards = (props) => {
+  let courses=props.courses;
+  let category=props.category;
   const [likedCourses,setLikedCourses]=useState([])
 
   const getCourses = () => {
-    let allCourses = [];
-    if (courses) {
-      Object.values(courses).forEach((courseCategory) => {
-        courseCategory.forEach((course) => {
-          allCourses.push(course);
+    if(category === "All") {
+      let allCourses = [];
+      if (courses) {
+        Object.values(courses).forEach((courseCategory) => {
+          courseCategory.forEach((course) => {
+            allCourses.push(course);
+          });
         });
-      });
+      }
+      return allCourses;
     }
-    return allCourses;
+    else{
+        // only specific category array passed
+        return courses[category] || [];
+    }
+    
   }
 
   return (
@@ -25,8 +34,10 @@ const Cards = ({ courses }) => {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {getCourses().map((course, index) => {
-            return <Card key={index} course={course}
+          {getCourses().map((course,index) => {
+            return <Card 
+            key={index} 
+            course={course}
             likedCourses={likedCourses}
             setLikedCourses={setLikedCourses} />;
           })}

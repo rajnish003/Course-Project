@@ -30,10 +30,13 @@ const App = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <Filter filterData={filterData} />
+      <Filter filterData={filterData}
+       category={category}
+       setCategory={setCategory}
+      />
       <div className="flex-grow">
         {
-          loading ? (<Spinner/>):(<Cards courses={courses}/>)
+          loading ? (<Spinner/>):(<Cards courses={courses} category={category}/>)
         }
       </div>
     </div>
